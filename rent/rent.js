@@ -79,11 +79,11 @@ function initAutocomplete() {
 }
 var key;
 setTimeout(function mark() {
-    $.getJSON("rent.json")
+    $.getJSON("rent/rent.json")
         .done(function (data) {
             var request = document.createElement('div');
             request.title = 'Add';
-            request.innerHTML = '<a href="request" rel="prefetch"><img src="images/request.png" alt="Submit a Request" width="30%"/></a>';
+            request.innerHTML = '<a href="request/request.html" rel="prefetch"><img src="images/request.png" alt="Submit a Request" width="30%"/></a>';
             request.index = 50;
             map.controls[google.maps.ControlPosition.LEFT].push(request);
 
