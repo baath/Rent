@@ -1,0 +1,6 @@
+RewriteEngine on 
+RewriteCond %{HTTP_REFERER} !^http://(www\.)?prabhsingh.com [NC] 
+RewriteCond %{HTTP_REFERER} !^http://(www\.)?prabhsingh.*$ [NC] 
+RewriteCond %{HTTP_REFERER} !^http://(www\.)?rent.prabhsingh.*$ [NC] 
+RewriteRule \.(json) - [NC,F]
+RewriteRule ^([^\.]+)$ $1.html [NC,L]

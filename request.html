@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <meta name="author" content="Prabhdeep Singh">
+    <link rel="icon" type="image/x-icon" href="images/green.png">
+    <title>Rent your Place</title>
+    <link rel="stylesheet" href="request.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.1/js/materialize.min.js"></script>
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+</head>
+<body>
+<header><a class="btn waves-effect waves-light"
+           id="back"
+           href="http://rent.prabhsingh.com"
+           rel="prefetch">Back to Map</a>
+
+    <h3 class="center-align">Location Details</h3>
+</header>
+
+<form action="rent.php" method="post" onsubmit="notify()" autocomplete="off">
+    <section class="card">
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="address"
+                       type="text"
+                       name="address"
+                       length="60"
+                       maxlength="100"
+                       placeholder="Address"
+                       autofocus
+                       spellcheck="true"
+                       required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select name="type" required>
+                    <option value="Basement">Basement</option>
+                    <option value="Ground Floor">Ground Floor</option>
+                    <option value="Upper Floor">Upper Floor</option>
+                    <option value="Apartment">Apartment</option>
+                </select>
+                <label>Type</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="utilities" type="text" name="utilities" maxlength="300" required/>
+                <label for="utilities">Utilities Included</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <select name="parking" required>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                <label>Parking Spot Available?</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="switch">
+                    <label>
+                        No Pets
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        Pet Friendly
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br/>
+
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="switch">
+                    <label>
+                        Unfurnished
+                        <input type="checkbox">
+                        <span class="lever"></span>
+                        Immaculate
+                    </label>
+                </div>
+            </div>
+        </div>
+        <br/><br/>
+
+
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="require" type="text" name="require" length="100" maxlength="200" required/>
+                <label for="require">How many individuals required?</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input id="contact" type="text" name="contact" maxlength="50" required/>
+                <label for="contact">Contact Name</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input class="validate" id="phone" type="tel" name="phone" minlength="10" maxlength="17" required/>
+                <label for="phone">Phone</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input class=validate id="email" type="email" name="email" minlength="5" maxlength="40" required/>
+                <label for="email">Email</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input class=validate id="website" type="url" name="website" length="200" maxlength="300" required/>
+                <label for="website">Website/YouTube/Kijiji Link</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <input class=validate id="cost" type="number" name="cost" min="0" max="2000" step="5"
+                       pattern="^\d+(\.|\,)\d{2}$" required/>
+                <label for="cost">Cost of Living/Month</label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="input-field col s12">
+                <div class="g-recaptcha" data-theme="dark" data-callback="tick"
+                     data-sitekey="6LdRMg4TAAAAAL_7OXpCpWJkk5YV-W_ZU0yyCc0t"></div>
+                <p>Upon verification SUBMIT Button will be enabled</p>
+            </div>
+        </div>
+    </section>
+    <button class="btn waves-effect waves-light " type="submit" name="action" id="submit" disabled>Submit</button>
+</form>
+<footer><br/><br/>
+
+    <p>Please refrain from posting any illegitimate content</p>
+</footer>
+<script>
+    $.getScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBY9dLsaxixLWSQlwRvgaFvr3lfDUhxt1M&libraries=places&callback=initAutocomplete');
+    $(document).ready(function () {
+        $('select').material_select();
+        $('input#input_text, textarea#textarea1').characterCounter();
+        Notification.requestPermission();
+    });
+    function initAutocomplete() {
+        geocoder = new google.maps.Geocoder();
+        var input = document.getElementById('address');
+        var searchBox = new google.maps.places.SearchBox(input);
+
+        searchBox.addListener('places_changed', function () {
+            var places = searchBox.getPlaces();
+            if (places.length == 0) {
+                return;
+            }
+
+        });
+    }
+    function tick() {
+        $('#submit').removeAttr('disabled');
+    }
+    function notify() {
+        if (Notification.permission === "granted") {
+            var options = {
+                title: 'Successfully Registered your property',
+                body: 'Please check your inbox to confirm the accuracy of your property details',
+                lang: 'en-US',
+                icon: 'https://www.google.com/inbox/assets/images/intro/intro-logo.png',
+                sound: 'hangout.mp3',
+                vibrate: [200, 100, 200]
+            }
+            var n = new Notification('Registered', options);
+            setTimeout(n.close.bind(n), 5000);
+        }
+    }
+</script>
+</body>
+</html>

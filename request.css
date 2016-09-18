@@ -1,0 +1,28 @@
+p {
+    text-align: center;
+}
+
+button {
+    float: right;
+    margin: 2%;
+}
+
+#back {
+    margin: 2% 2% 2% 40%;
+}
+
+#submit {
+    margin: 2%;
+}
+
+@media screen and (min-width: 700px) {
+    form {
+        margin: 0 30%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    #back {
+        margin: 2% 2% 2% 28%;
+    }
+}
